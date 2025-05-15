@@ -90,8 +90,8 @@ expenseList.addEventListener("click", (event) => {
   if (event.target.classList.contains("remove-icon")) {
     const expenseItem = event.target.closest(".expense");
     expenseItem.remove();
-    updateTotals(); // Atualiza os totais
   }
+  updateTotals(); // Atualiza os totais
 });
 
 // Atualiza a quantidade de despesas e o valor total
@@ -118,14 +118,14 @@ function updateTotals() {
     const symbolBRL = document.createElement("small");
     symbolBRL.textContent = "R$";
     total = formatCurrencyBRL(total).replace("R$", "");
-    expenseTotal.innerHTML = ""
+    expenseTotal.innerHTML = "";
     expenseTotal.append(symbolBRL, total);
 
-    
-    form.reset();//reseta o formulário
+    form.reset(); //reseta o formulário
     expense.focus(); // Foca o campo de despesa
   } catch (error) {
     alert("Erro ao atualizar totais");
     console.log(error);
   }
 }
+ 
