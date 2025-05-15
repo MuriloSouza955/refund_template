@@ -1,6 +1,8 @@
 // Seleciona os elementos do formulário
-
+const form = document.querySelector("form");
 const amount = document.getElementById("amount");
+const expense = document.getElementById("expense");
+const category = document.getElementById("category");
 
 amount.oninput = function () {
   let value = amount.value.replace(/\D/g, "");
@@ -18,4 +20,18 @@ function formatCurrencyBRL(value){
         maximumFractionDigits: 2
     });
     return value;
+}
+
+form.onsubmit = (event) => {
+    event.preventDefault();
+
+    const newExpense = {
+        id: new Date().getTime(),
+        expense: expense.value,
+        category_id: category.value,
+        category_name: category.options[category.selectedIndex].text,
+        amount: amount.value,
+        created_at: new Date(),
+    }
+    console.log(newExpense);
 }
