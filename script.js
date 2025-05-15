@@ -5,7 +5,8 @@ const expense = document.getElementById("expense");
 const category = document.getElementById("category");
 
 const expenseList = document.querySelector("ul");
-const expenseQuantity = document.querySelector("aside header p span")
+const expenseTotal = document.querySelector("aside header h2");
+const expenseQuantity = document.querySelector("aside header p span");
 
 // Captura o evento de input no campo de valor
 amount.oninput = function () {
@@ -96,8 +97,33 @@ expenseList.addEventListener("click", (event) => {
 // Atualiza a quantidade de despesas e o valor total
 function updateTotals() {
   try {
-    const qtde_items = expenseList.children.length; // Pega a quantidade de filhos da lista
-    expenseQuantity.textContent = `${qtde_items} ${qtde_items > 1 ? "despesas" : "despesa"}`; // Atualiza o valor da quantidade de despesas
+    const items = expenseList.children.length; // Pega a quantidade de filhos da lista
+    expenseQuantity.textContent = `${items} ${
+      items > 1 ? "despesas" : "despesa"
+    }`; // Atualiza o valor da quantidade de despesas
+
+    let total = 0;
+    for (let item = 0; item < items; item++) {
+      const itemAmount =
+        expenseList.children[item].querySelector(".expense-amount");
+
+      let value = itemAmount.textContent
+        .replace(/[^\d,]/g, "") //remove caracteres nao numéricos
+        .replace(",", "."); //separa o valor por vírgula
+
+      value = parseFloat(value);
+      if (isNaN(value)) return alert("Valor da despesa inválido");
+      total += Number(value);
+    }
+    const symbolBRL = document.createElement("small");
+    symbolBRL.textContent = "R$";
+    total = formatCurrencyBRL(total).replace("R$", "");
+    expenseTotal.innerHTML = ""
+    expenseTotal.append(symbolBRL, total);
+
+    
+    form.reset();//reseta o formulário
+    expense.focus(); // Foca o campo de despesa
   } catch (error) {
     alert("Erro ao atualizar totais");
     console.log(error);
