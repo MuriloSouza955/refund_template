@@ -128,4 +128,3 @@ function updateTotals() {
     console.log(error);
   }
 }
- 
